@@ -1,0 +1,13 @@
+# Netplan (sensitive)
+etc/netplan/*
+/etc/netplan/*
+
+# Python
+__pycache__/
+*.pyc
+
+# Logs
+*.log
+
+# Backup files
+*.backup.yaml

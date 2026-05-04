@@ -1,0 +1,282 @@
+device:
+  name: breaker_grid_1
+  bind: "0.0.0.0"
+  port: 502
+  unit_id: 255
+
+encoding:
+  byteorder: big
+  wordorder: big
+
+registers:
+  # --- Status ---
+  - address: 12000
+    type: uint16
+    value: 0        # Validity bits: 0 = data valid
+
+  - address: 12001
+    type: uint16
+    value: 1        # Bit 0 = closed, no trip/fault
+
+  # --- Trips / alarms / IO ---
+  - address: 12002
+    type: uint16
+    value: 0
+
+  - address: 12003
+    type: uint16
+    value: 0
+
+  - address: 12004
+    type: uint16
+    value: 0        # No trip cause
+
+  - address: 12005
+    type: uint16
+    value: 0
+
+  - address: 12008
+    type: uint16
+    value: 0        # No protection pickup
+
+  - address: 12009
+    type: uint16
+    value: 0
+
+  - address: 12010
+    type: uint16
+    value: 0
+
+  - address: 12011
+    type: uint16
+    value: 0        # No pre-alarms
+
+  - address: 12012
+    type: uint16
+    value: 0        # No user alarms
+
+  # --- Current: A ---
+  - address: 12016
+    type: uint16
+    value: 120
+
+  - address: 12017
+    type: uint16
+    value: 115
+
+  - address: 12018
+    type: uint16
+    value: 118
+
+  - address: 12019
+    type: uint16
+    value: 0        # Neutral
+
+  - address: 12020
+    type: uint16
+    value: 120      # Max current
+
+  # --- Voltage: V, not scaled ---
+  - address: 12030
+    type: uint16
+    value: 400
+
+  - address: 12031
+    type: uint16
+    value: 398
+
+  - address: 12032
+    type: uint16
+    value: 402
+
+  - address: 12033
+    type: uint16
+    value: 230
+
+  - address: 12034
+    type: uint16
+    value: 229
+
+  - address: 12035
+    type: uint16
+    value: 231
+
+  # --- Frequency: 0.1 Hz ---
+  - address: 12036
+    type: uint16
+    value: 500      # 50.0 Hz
+
+  - address: 12037
+    type: uint16
+    value: 501      # Max frequency 50.1 Hz
+
+  # --- Power: 0.1 kW / kVAR / kVA ---
+  - address: 12038
+    type: int16
+    value: 167      # P1 = 16.7 kW
+
+  - address: 12039
+    type: int16
+    value: 164      # P2 = 16.4 kW
+
+  - address: 12040
+    type: int16
+    value: 169      # P3 = 16.9 kW
+
+  - address: 12041
+    type: int16
+    value: -500      # Ptot = 50.0 kW, positive consumption
+
+  - address: 12042
+    type: int16
+    value: 17       # Q1 = 1.7 kVAR
+
+  - address: 12043
+    type: int16
+    value: 16       # Q2 = 1.6 kVAR
+
+  - address: 12044
+    type: int16
+    value: 17       # Q3 = 1.7 kVAR
+
+  - address: 12045
+    type: int16
+    value: -50       # Qtot = 5.0 kVAR
+
+  - address: 12046
+    type: uint16
+    value: 170      # S1 = 17.0 kVA
+
+  - address: 12047
+    type: uint16
+    value: 167      # S2 = 16.7 kVA
+
+  - address: 12048
+    type: uint16
+    value: 171      # S3 = 17.1 kVA
+
+  - address: 12049
+    type: uint16
+    value: 505      # Stot = 50.5 kVA
+
+  # --- Energy ---
+  - address: 12050
+    type: int32
+    value: 123456   # kWh
+
+  - address: 12052
+    type: int32
+    value: 12000    # kVARh
+
+  - address: 12054
+    type: uint32
+    value: 123456   # EpIn
+
+  - address: 12056
+    type: uint32
+    value: 0        # EpOut
+
+  # --- Demand ---
+  - address: 12080
+    type: uint16
+    value: 118
+
+  - address: 12081
+    type: uint16
+    value: 114
+
+  - address: 12082
+    type: uint16
+    value: 116
+
+  - address: 12084
+    type: uint16
+    value: 480      # 48.0 kW demand
+
+  - address: 12085
+    type: uint16
+    value: 45       # 4.5 kVAR demand
+
+  - address: 12086
+    type: uint16
+    value: 482      # 48.2 kVA demand
+
+  # --- Maximum voltage ---
+  - address: 12090
+    type: uint16
+    value: 405
+
+  - address: 12091
+    type: uint16
+    value: 404
+
+  - address: 12092
+    type: uint16
+    value: 406
+
+  # --- Power factor: 0.01 ---
+  - address: 12096
+    type: int16
+    value: 98       # 0.98
+
+  - address: 12097
+    type: int16
+    value: 98
+
+  - address: 12098
+    type: int16
+    value: 99
+
+  - address: 12099
+    type: int16
+    value: 98
+
+  # --- THD: 0.1 % ---
+  - address: 12104
+    type: uint16
+    value: 21       # 2.1 %
+
+  - address: 12105
+    type: uint16
+    value: 19
+
+  - address: 12106
+    type: uint16
+    value: 22
+
+  - address: 12110
+    type: uint16
+    value: 31       # 3.1 %
+
+  - address: 12111
+    type: uint16
+    value: 29
+
+  - address: 12112
+    type: uint16
+    value: 30
+
+  # --- Counters / misc ---
+  - address: 12160
+    type: uint16
+    value: 0        # Trip counter
+
+  - address: 12161
+    type: uint16
+    value: 0
+
+  - address: 12162
+    type: uint16
+    value: 0
+
+  - address: 12163
+    type: uint16
+    value: 0
+
+  - address: 12164
+    type: uint16
+    value: 0
+
+  - address: 12165
+    type: uint16
+    value: 0
