@@ -39,7 +39,7 @@ def main() -> None:
         device["name"],
         device.get("type", "generic"),
         device.get("bind", "0.0.0.0"),
-        device["port"],
+        device.get("port", 502),
         device.get("unit_id", 255),
     )
     logger.info("Loaded %s configured registers", len(config.get("registers", [])))
@@ -47,7 +47,7 @@ def main() -> None:
     StartTcpServer(
         context=context,
         identity=None,
-        address=(device.get("bind", "0.0.0.0"), int(device["port"])),
+        address=(device.get("bind", "0.0.0.0"), int(device.get("port", 502))),
     )
 
 
