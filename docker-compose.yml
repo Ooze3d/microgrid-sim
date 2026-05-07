@@ -1,16 +1,10 @@
 services:
-  pm-grid:
-    build: .
-    container_name: pm-grid
-    command: python app/device_server.py --config configs/pm_grid_1.yaml
-    ports:
-      - "192.168.52.34:502:502"
-    restart: unless-stopped
-
   breaker-sotano:
     build: .
     container_name: breaker-sotano
-    command: python app/device_server.py --config configs/breaker_grid_1.yaml
-    ports:
-      - "192.168.52.8:502:502"
+    network_mode: host
+    command: python -m app.device_server --config /app/configs/breaker_sotano.yaml
+    volumes:
+      - ./configs:/app/configs
+      - ./app:/app/app
     restart: unless-stopped

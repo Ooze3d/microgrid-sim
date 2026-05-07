@@ -1,0 +1,15 @@
+device:
+  name: breaker_sotano
+  type: nsx_legacy
+  ip: 192.168.52.8
+
+behaviour:
+  current_min: 110
+  current_max: 130
+
+command:
+  plc_triggers:
+    open:
+      address: 11060
+      bit: 0
+      value: 1
