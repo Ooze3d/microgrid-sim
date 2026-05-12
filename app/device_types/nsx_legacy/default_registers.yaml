@@ -1,9 +1,3 @@
-device:
-  name: breaker_grid_1
-  bind: "0.0.0.0"
-  port: 502
-  unit_id: 255
-
 encoding:
   byteorder: big
   wordorder: big
@@ -125,7 +119,7 @@ registers:
 
   - address: 12041
     type: int16
-    value: -500      # Ptot = 50.0 kW, positive consumption
+    value: -500      # Ptot = 50.0 kW, positive consumption (in this project/HMI convention)
 
   - address: 12042
     type: int16
@@ -141,7 +135,7 @@ registers:
 
   - address: 12045
     type: int16
-    value: -50       # Qtot = 5.0 kVAR
+    value: -50       # Qtot = 5.0 kVAR, positive consumption (in this project/HMI convention)
 
   - address: 12046
     type: uint16

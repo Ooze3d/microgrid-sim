@@ -1,0 +1,37 @@
+device:
+  name: breaker_sotano
+  type: nsx_legacy
+  bind_ip: "192.168.52.8"
+  port: 502
+  unit_id: 255
+  tick_interval: 0.2
+
+behaviour:
+  current_min: 110
+  current_max: 130
+
+command:
+  plc:
+    host: 192.168.52.74
+    port: 502
+    unit_id: 255
+    timeout: 1.0
+
+  plc_triggers:
+    open:
+      source: plc
+      address: 11060
+      bit: 0
+      value: 1
+
+    close:
+      source: plc
+      address: 11060
+      bit: 1
+      value: 1
+
+    reset:
+      source: plc
+      address: 11060
+      bit: 2
+      value: 1
