@@ -21,6 +21,7 @@ def main() -> None:
 
     config_path = Path(args.config)
     config = load_device_config(config_path)
+
     device = config["device"]
 
     context, slave, model = build_context(config)
@@ -34,20 +35,27 @@ def main() -> None:
         interval_seconds=float(device.get("tick_interval", 0.2)),
     )
 
+    bind_ip = device.get("bind_ip", "0.0.0.0")
+    port = int(device.get("port", 502))
+    unit_id = int(device.get("unit_id", 255))
+
     logger.info(
         "Starting %s (%s) on %s:%s (unit_id=%s)",
         device["name"],
         device.get("type", "generic"),
-        device.get("bind", "0.0.0.0"),
-        device.get("port", 502),
-        device.get("unit_id", 255),
+        bind_ip,
+        port,
+        unit_id,
     )
-    logger.info("Loaded %s configured registers", len(config.get("registers", [])))
+
+    logger.info(
+        "Loaded %s configured registers",
+        len(config.get("registers", [])),
+    )
 
     StartTcpServer(
         context=context,
-        identity=None,
-        address=(device.get("bind", "0.0.0.0"), int(device.get("port", 502))),
+        address=(bind_ip, port),
     )
 
 

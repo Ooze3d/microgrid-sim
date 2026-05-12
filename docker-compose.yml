@@ -11,3 +11,19 @@ services:
     network_mode: host
 
     restart: unless-stopped
+
+  nsx-acometida-1:
+    build: .
+    container_name: nsx-acometida-1
+
+    command: >
+      python -m app.device_server
+      --config /app/configs/nsx_acometida_1.yaml
+
+    volumes:
+      - ./configs:/app/configs
+      - ./app:/app/app
+
+    network_mode: host
+
+    restart: unless-stopped

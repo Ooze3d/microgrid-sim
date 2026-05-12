@@ -1,7 +1,7 @@
 device:
-  name: breaker_sotano
+  name: nsx_acometida_1
   type: nsx_legacy
-  bind_ip: "192.168.52.8"
+  bind_ip: "192.168.52.32"
   port: 502
   unit_id: 255
   tick_interval: 0.2
@@ -20,18 +20,18 @@ command:
   plc_triggers:
     open:
       source: plc
-      address: 11060
+      address: 16000
       bit: 0
       value: 1
 
     close:
       source: plc
-      address: 11060
+      address: 16000
       bit: 1
       value: 1
 
     reset:
       source: plc
-      address: 11060
-      bit: 2
+      address: 16000
+      bit: 4
       value: 1
