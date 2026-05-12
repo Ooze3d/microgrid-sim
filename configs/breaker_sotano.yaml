@@ -11,8 +11,27 @@ behaviour:
   current_max: 130
 
 command:
+  plc:
+    host: 192.168.52.74
+    port: 502
+    unit_id: 255
+    timeout: 1.0
+
   plc_triggers:
     open:
+      source: plc
       address: 11060
       bit: 0
+      value: 1
+
+    close:
+      source: plc
+      address: 11060
+      bit: 1
+      value: 1
+
+    reset:
+      source: plc
+      address: 11060
+      bit: 2
       value: 1

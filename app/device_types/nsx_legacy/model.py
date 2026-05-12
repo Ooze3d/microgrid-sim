@@ -2,6 +2,7 @@ import random
 from typing import Any
 
 from app.core.base_model import BaseDeviceModel
+from app.core.plc_client import PLCModbusClient
 
 
 class NSXLegacyModel(BaseDeviceModel):
@@ -25,6 +26,18 @@ class NSXLegacyModel(BaseDeviceModel):
         self.closed_apparent_power = int(behaviour.get("closed_apparent_power", 505))
 
         self.command = config.get("command", {})
+
+        plc_cfg = self.command.get("plc", {})
+        self.plc_client = None
+
+        if plc_cfg.get("host"):
+            self.plc_client = PLCModbusClient(
+                host=plc_cfg["host"],
+                port=int(plc_cfg.get("port", 502)),
+                unit_id=int(plc_cfg.get("unit_id", 255)),
+                timeout=float(plc_cfg.get("timeout", 1.0)),
+            )
+
         self.last_plc_open_value = 0
         self.last_plc_close_value = 0
         self.last_plc_reset_value = 0
@@ -100,11 +113,22 @@ class NSXLegacyModel(BaseDeviceModel):
 
     def _read_trigger_value(self, datastore, trigger_cfg: dict[str, Any]) -> int:
         address = int(trigger_cfg["address"])
-        raw_value = datastore.getValues(address, 1)[0]
+
+        source = trigger_cfg.get("source", "local")
+
+        if source == "plc":
+            if self.plc_client is None:
+                return 0
+
+            raw_value = self.plc_client.read_holding_register(address)
+            if raw_value is None:
+                return 0
+        else:
+            raw_value = datastore.getValues(address, 1)[0]
 
         bit = trigger_cfg.get("bit")
         if bit is not None:
-            return (raw_value >> int(bit)) & 1
+            return (int(raw_value) >> int(bit)) & 1
 
         return int(raw_value)
 

@@ -2,9 +2,18 @@ services:
   breaker-sotano:
     build: .
     container_name: breaker-sotano
-    network_mode: host
     command: python -m app.device_server --config /app/configs/breaker_sotano.yaml
+
     volumes:
       - ./configs:/app/configs
       - ./app:/app/app
+
+    networks:
+      microgrid_net:
+        ipv4_address: 192.168.52.8
+
     restart: unless-stopped
+
+networks:
+  microgrid_net:
+    external: true
