@@ -27,3 +27,79 @@ services:
     network_mode: host
 
     restart: unless-stopped
+
+  pm-acometida-1:
+    build: .
+    container_name: pm-acometida-1
+
+    command:
+      - python
+      - -m
+      - app.device_server
+      - --config
+      - /app/configs/pm_acometida_1.yaml
+
+    volumes:
+      - ./configs:/app/configs
+      - ./app:/app/app
+
+    network_mode: host
+
+    restart: unless-stopped
+
+  pm-acometida-2:
+    build: .
+    container_name: pm-acometida-2
+
+    command:
+      - python
+      - -m
+      - app.device_server
+      - --config
+      - /app/configs/pm_acometida_2.yaml
+
+    volumes:
+      - ./configs:/app/configs
+      - ./app:/app/app
+
+    network_mode: host
+
+    restart: unless-stopped
+
+  bms-bateria:
+    build: .
+    container_name: bms-bateria
+
+    command:
+      - python
+      - -m
+      - app.device_server
+      - --config
+      - /app/configs/bms_bateria.yaml
+
+    volumes:
+      - ./configs:/app/configs
+      - ./app:/app/app
+
+    network_mode: host
+
+    restart: unless-stopped
+
+  pcs-danfoss:
+    build: .
+    container_name: pcs-danfoss
+
+    command:
+      - python
+      - -m
+      - app.device_server
+      - --config
+      - /app/configs/pcs_danfoss.yaml
+
+    volumes:
+      - ./configs:/app/configs
+      - ./app:/app/app
+
+    network_mode: host
+
+    restart: unless-stopped

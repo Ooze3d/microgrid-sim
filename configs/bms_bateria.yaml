@@ -1,0 +1,25 @@
+device:
+  name: bms_bateria
+  type: bms_narada
+  bind_ip: "192.168.52.69"
+  port: 502
+  unit_id: 1
+  tick_interval: 0.5
+
+behaviour:
+  dynamic: true
+
+  voltage_min: 775.0
+  voltage_max: 785.0
+
+  current_min: 5.0
+  current_max: 25.0
+
+  soc: 70.0
+  soh: 98.0
+
+  temp_min: 23.0
+  temp_max: 28.0
+
+  energy_charged: 1000
+  energy_discharged: 500

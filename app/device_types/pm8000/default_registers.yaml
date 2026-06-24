@@ -1,0 +1,54 @@
+encoding:
+  byteorder: big
+  wordorder: little
+
+registers:
+  - name: Current_I1
+    address: 20999
+    type: float32
+    value: 11.111
+
+  - name: Current_I2
+    address: 21001
+    type: float32
+    value: 22.222
+
+  - name: Current_I3
+    address: 21003
+    type: float32
+    value: 33.333
+
+  - name: Voltage_V12
+    address: 21017
+    type: float32
+    value: 444.444
+
+  - name: Voltage_V23
+    address: 21019
+    type: float32
+    value: 555.555
+
+  - name: Voltage_V31
+    address: 21021
+    type: float32
+    value: 666.666
+
+  - name: Active_Power
+    address: 21045
+    type: float32
+    value: 777.777
+
+  - name: Reactive_Power
+    address: 21053
+    type: float32
+    value: 888.888
+
+  - name: Apparent_Power
+    address: 21061
+    type: float32
+    value: 999.999
+
+  - name: Frequency
+    address: 21015
+    type: float32
+    value: 49.123
