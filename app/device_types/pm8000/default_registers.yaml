@@ -18,6 +18,11 @@ registers:
     type: float32
     value: 33.333
 
+  - name: Frequency
+    address: 21015
+    type: float32
+    value: 49.123
+
   - name: Voltage_V12
     address: 21017
     type: float32
@@ -33,22 +38,60 @@ registers:
     type: float32
     value: 666.666
 
+  # EMO-M divide Active/Apparent/Reactive by 1000.
   - name: Active_Power
     address: 21045
     type: float32
-    value: 777.777
-
-  - name: Reactive_Power
-    address: 21053
-    type: float32
-    value: 888.888
+    value: 777777.0
 
   - name: Apparent_Power
+    address: 21053
+    type: float32
+    value: 999999.0
+
+  - name: Reactive_Power
     address: 21061
     type: float32
-    value: 999.999
+    value: 888888.0
 
-  - name: Frequency
-    address: 21015
-    type: float32
-    value: 49.123
+  # Energy block starts at 3203 and is handled dynamically by model.py.
+  # These zeros are only safe defaults.
+  - name: Energy_Word_1
+    address: 3203
+    type: uint16
+    value: 0
+
+  - name: Energy_Word_2
+    address: 3204
+    type: uint16
+    value: 0
+
+  - name: Energy_Word_3
+    address: 3205
+    type: uint16
+    value: 0
+
+  - name: Energy_Word_4
+    address: 3206
+    type: uint16
+    value: 0
+
+  - name: Energy_Word_5
+    address: 3207
+    type: uint16
+    value: 0
+
+  - name: Energy_Word_6
+    address: 3208
+    type: uint16
+    value: 0
+
+  - name: Energy_Word_7
+    address: 3209
+    type: uint16
+    value: 0
+
+  - name: Energy_Word_8
+    address: 3210
+    type: uint16
+    value: 0

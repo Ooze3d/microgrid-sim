@@ -31,8 +31,8 @@ class PM8000Model(BaseDeviceModel):
         self.frequency_min = float(behaviour.get("frequency_min", 49.90))
         self.frequency_max = float(behaviour.get("frequency_max", 50.05))
 
-        self.energy_in = float(behaviour.get("initial_energy_in", 4248619.0))
-        self.energy_out = float(behaviour.get("initial_energy_out", 6570.0))
+        self.energy_in = float(behaviour.get("initial_energy_in", 123456.0))
+        self.energy_out = float(behaviour.get("initial_energy_out", 0.0))
 
         self.byteorder = config.get("encoding", {}).get("byteorder", "big")
         self.wordorder = config.get("encoding", {}).get("wordorder", "little")
@@ -61,26 +61,30 @@ class PM8000Model(BaseDeviceModel):
         # Rough kWh accumulation. Active power is treated as kW.
         self.energy_in += abs(p_kw) / 3600.0
 
-        self._set_float(datastore, 3203, self.energy_in)
-        self._set_float(datastore, 3207, self.energy_out)
+        # Energy block used by EMO-M PM8000 reading.
+        self._set_energy_block(datastore, 3203, int(self.energy_in))
 
         # Currents
         self._set_float(datastore, 20999, i1)
         self._set_float(datastore, 21001, i2)
         self._set_float(datastore, 21003, i3)
 
+        # Frequency
+        self._set_float(datastore, 21015, f)
+
         # Voltages
         self._set_float(datastore, 21017, v12)
         self._set_float(datastore, 21019, v23)
         self._set_float(datastore, 21021, v31)
 
-        # Powers (PM8000 real mapping)
-        self._set_float(datastore, 21045, p_kw * 1000)
-        self._set_float(datastore, 21053, q_kvar * 1000)
-        self._set_float(datastore, 21061, s_kva * 1000)
-
-        # Frequency
-        self._set_float(datastore, 21015, f)
+        # Powers.
+        # EMO-M divides these by 1000:
+        # 21045 -> Active_Power
+        # 21053 -> Apparent_Power
+        # 21061 -> Reactive_Power
+        self._set_float(datastore, 21045, p_kw * 1000.0)
+        self._set_float(datastore, 21053, s_kva * 1000.0)
+        self._set_float(datastore, 21061, q_kvar * 1000.0)
 
     def _set_float(self, datastore, address: int, value: float) -> None:
         words = encode_value(
@@ -90,3 +94,19 @@ class PM8000Model(BaseDeviceModel):
             wordorder=self.wordorder,
         )
         datastore.setValues(address, words)
+
+    def _set_energy_block(self, datastore, start_address: int, value: int) -> None:
+        value = max(0, int(value))
+
+        words = [
+            (value >> 48) & 0xFFFF,
+            (value >> 32) & 0xFFFF,
+            (value >> 16) & 0xFFFF,
+            value & 0xFFFF,
+            0,
+            0,
+            0,
+            0,
+        ]
+
+        datastore.setValues(start_address, words)
