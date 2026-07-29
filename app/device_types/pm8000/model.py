@@ -4,6 +4,8 @@ from typing import Any
 from app.core.base_model import BaseDeviceModel
 from app.core.encoding import encode_value
 
+from app.core.plc_client import PLCModbusClient
+
 
 class PM8000Model(BaseDeviceModel):
     def __init__(self, config: dict[str, Any]):
