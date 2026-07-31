@@ -6,6 +6,16 @@ device:
   unit_id: 255
   tick_interval: 0.2
 
+availability:
+  host: "192.168.52.32"
+  port: 502
+  unit_id: 255
+  timeout: 1.0
+  address: 12001
+  bit: 0
+  available_value: 1
+  initial_available: true
+
 behaviour:
   dynamic: true
 

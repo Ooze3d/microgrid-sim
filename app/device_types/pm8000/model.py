@@ -39,11 +39,99 @@ class PM8000Model(BaseDeviceModel):
         self.byteorder = config.get("encoding", {}).get("byteorder", "big")
         self.wordorder = config.get("encoding", {}).get("wordorder", "little")
 
+        availability = config.get("availability", {})
+
+        self.availability_client = None
+        self.availability_address = None
+        self.availability_bit = None
+        self.availability_value = 1
+
+        # Conservamos el último estado conocido si hay un fallo puntual
+        # de comunicación con el NSX.
+        self.available = bool(availability.get("initial_available", True))
+
+        host = availability.get("host")
+
+        if host:
+            self.availability_client = PLCModbusClient(
+                host=str(host),
+                port=int(availability.get("port", 502)),
+                unit_id=int(availability.get("unit_id", 255)),
+                timeout=float(availability.get("timeout", 1.0)),
+            )
+
+            self.availability_address = int(
+                availability.get("address", 12001)
+            )
+
+            bit = availability.get("bit")
+            self.availability_bit = int(bit) if bit is not None else None
+
+            self.availability_value = int(
+                availability.get("available_value", 1)
+            )
+
     def tick(self, datastore) -> None:
         if not self.dynamic:
             return
 
+        available = self._read_availability()
+
+        if available != self.available:
+            self.available = available
+
+            if self.available:
+                self.log("Power source AVAILABLE")
+            else:
+                self.log("Power source UNAVAILABLE - applying zero measurements")
+
+        if not self.available:
+            self._apply_zero_values(datastore)
+            return
+
         self._apply_dynamic_values(datastore)
+
+    def _read_availability(self) -> bool:
+        if (
+            self.availability_client is None
+            or self.availability_address is None
+        ):
+            return True
+
+        raw_value = self.availability_client.read_holding_register(
+            self.availability_address
+        )
+
+        # Un timeout puntual no cambia el estado eléctrico simulado.
+        # Conservamos el último estado conocido.
+        if raw_value is None:
+            return self.available
+
+        if self.availability_bit is not None:
+            raw_value = (
+                int(raw_value) >> self.availability_bit
+            ) & 1
+
+        return int(raw_value) == self.availability_value
+
+    def _apply_zero_values(self, datastore) -> None:
+        # Corrientes
+        self._set_float(datastore, 20999, 0.0)
+        self._set_float(datastore, 21001, 0.0)
+        self._set_float(datastore, 21003, 0.0)
+
+        # Frecuencia
+        self._set_float(datastore, 21015, 0.0)
+
+        # Tensiones
+        self._set_float(datastore, 21017, 0.0)
+        self._set_float(datastore, 21019, 0.0)
+        self._set_float(datastore, 21021, 0.0)
+
+        # Potencias
+        self._set_float(datastore, 21045, 0.0)
+        self._set_float(datastore, 21053, 0.0)
+        self._set_float(datastore, 21061, 0.0)
 
     def _apply_dynamic_values(self, datastore) -> None:
         i1 = random.uniform(self.current_min, self.current_max)
