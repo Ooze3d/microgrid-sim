@@ -1,19 +1,22 @@
 services:
   breaker-sotano:
-    build: .
+    build:
+      context: ../..
+      dockerfile: Dockerfile
     container_name: breaker-sotano
     command: python -m app.device_server --config /app/configs/breaker_sotano.yaml
 
     volumes:
       - ./configs:/app/configs
-      - ./app:/app/app
 
     network_mode: host
 
     restart: unless-stopped
 
   nsx-acometida-1:
-    build: .
+    build:
+      context: ../..
+      dockerfile: Dockerfile
     container_name: nsx-acometida-1
 
     command: >
@@ -22,14 +25,15 @@ services:
 
     volumes:
       - ./configs:/app/configs
-      - ./app:/app/app
 
     network_mode: host
 
     restart: unless-stopped
 
   nsx-acometida-2:
-    build: .
+    build:
+      context: ../..
+      dockerfile: Dockerfile
     container_name: nsx-acometida-2
 
     command: >
@@ -38,14 +42,15 @@ services:
 
     volumes:
       - ./configs:/app/configs
-      - ./app:/app/app
 
     network_mode: host
 
     restart: unless-stopped
 
   pm-acometida-1:
-    build: .
+    build:
+      context: ../..
+      dockerfile: Dockerfile
     container_name: pm-acometida-1
 
     command:
@@ -57,14 +62,15 @@ services:
 
     volumes:
       - ./configs:/app/configs
-      - ./app:/app/app
 
     network_mode: host
 
     restart: unless-stopped
 
   pm-acometida-2:
-    build: .
+    build:
+      context: ../..
+      dockerfile: Dockerfile
     container_name: pm-acometida-2
 
     command:
@@ -76,14 +82,15 @@ services:
 
     volumes:
       - ./configs:/app/configs
-      - ./app:/app/app
 
     network_mode: host
 
     restart: unless-stopped
 
   bms-bateria:
-    build: .
+    build:
+      context: ../..
+      dockerfile: Dockerfile
     container_name: bms-bateria
 
     command:
@@ -95,14 +102,15 @@ services:
 
     volumes:
       - ./configs:/app/configs
-      - ./app:/app/app
 
     network_mode: host
 
     restart: unless-stopped
 
   pcs-danfoss:
-    build: .
+    build:
+      context: ../..
+      dockerfile: Dockerfile
     container_name: pcs-danfoss
 
     command:
@@ -114,7 +122,6 @@ services:
 
     volumes:
       - ./configs:/app/configs
-      - ./app:/app/app
 
     network_mode: host
 
