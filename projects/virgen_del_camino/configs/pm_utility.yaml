@@ -1,0 +1,28 @@
+device:
+  name: pm_utility
+  type: pm5563
+  bind_ip: "10.255.28.79"
+  port: 502
+  unit_id: 255
+  tick_interval: 0.2
+
+behaviour:
+  dynamic: true
+
+  current_min: 35
+  current_max: 55
+
+  voltage_min: 398
+  voltage_max: 405
+
+  active_power_min: 40
+  active_power_max: 70
+
+  reactive_power_min: 5
+  reactive_power_max: 12
+
+  apparent_power_min: 42
+  apparent_power_max: 72
+
+  frequency_min: 49.95
+  frequency_max: 50.05

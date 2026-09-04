@@ -1,0 +1,21 @@
+services:
+  pm-utility:
+    build:
+      context: ../..
+      dockerfile: Dockerfile
+
+    container_name: vdc-pm-utility
+
+    command:
+      - python
+      - -m
+      - app.device_server
+      - --config
+      - /app/configs/pm_utility.yaml
+
+    volumes:
+      - ./configs:/app/configs
+
+    network_mode: host
+
+    restart: unless-stopped

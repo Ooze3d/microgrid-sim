@@ -1,0 +1,159 @@
+encoding:
+  byteorder: big
+  wordorder: little
+
+registers:
+  # Request 1 starts at 2999
+
+  - name: Current_I1
+    address: 2999
+    type: float32
+    value: 41.1
+
+  - name: Current_I2
+    address: 3001
+    type: float32
+    value: 42.2
+
+  - name: Current_I3
+    address: 3003
+    type: float32
+    value: 43.3
+
+  # V12/V23/V31 are positions 21-26 of request 1
+  - name: Voltage_V12
+    address: 3019
+    type: float32
+    value: 401.1
+
+  - name: Voltage_V23
+    address: 3021
+    type: float32
+    value: 402.2
+
+  - name: Voltage_V31
+    address: 3023
+    type: float32
+    value: 403.3
+
+  # Request 2 starts at 3059
+
+  - name: Active_Power
+    address: 3059
+    type: float32
+    value: 55.5
+
+  - name: Reactive_Power
+    address: 3067
+    type: float32
+    value: 8.8
+
+  - name: Apparent_Power
+    address: 3075
+    type: float32
+    value: 56.2
+
+  # Request 3 starts at 3109
+
+  - name: Frequency
+    address: 3109
+    type: float32
+    value: 50.01
+
+  # ---------------------------------------------------------
+  # Request 1 - additional current / voltage measurements
+  # Base address: 2999
+  # ---------------------------------------------------------
+
+  - name: Current_Unbalance_Worst
+    address: 3017
+    type: float32
+    value: 1.5
+
+  - name: Voltage_AN
+    address: 3027
+    type: float32
+    value: 231.0
+
+  - name: Voltage_BN
+    address: 3029
+    type: float32
+    value: 232.0
+
+  - name: Voltage_CN
+    address: 3031
+    type: float32
+    value: 230.0
+
+
+  # ---------------------------------------------------------
+  # Request 6 - THD
+  # Base address: 21299
+  # ---------------------------------------------------------
+
+  - name: ITHD_Phase_1
+    address: 21299
+    type: float32
+    value: 2.1
+
+  - name: ITHD_Phase_2
+    address: 21301
+    type: float32
+    value: 2.3
+
+  - name: ITHD_Phase_3
+    address: 21303
+    type: float32
+    value: 2.0
+
+  - name: VTHD_Phase_AB
+    address: 21321
+    type: float32
+    value: 1.2
+
+  - name: VTHD_Phase_BC
+    address: 21323
+    type: float32
+    value: 1.3
+
+  - name: VTHD_Phase_CA
+    address: 21325
+    type: float32
+    value: 1.1
+
+
+  # ---------------------------------------------------------
+  # Request 8 - maximum current / voltage
+  # Base address: 27703
+  # ---------------------------------------------------------
+
+  - name: Max_Current_Avg
+    address: 27703
+    type: float32
+    value: 48.0
+
+  - name: Maximum_VoltageAvg
+    address: 27719
+    type: float32
+    value: 405.0
+
+
+  # ---------------------------------------------------------
+  # Request 9 - maximum powers
+  # Base address: 27753
+  # ---------------------------------------------------------
+
+  - name: Maximum_active_power
+    address: 27753
+    type: float32
+    value: 75.0
+
+  - name: Maximum_reactive_power
+    address: 27761
+    type: float32
+    value: 15.0
+
+  - name: Maximum_apparent_power
+    address: 27769
+    type: float32
+    value: 78.0
