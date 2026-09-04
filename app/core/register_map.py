@@ -6,8 +6,18 @@ from app.core.encoding import encode_value
 logger = logging.getLogger("device_server")
 
 
-def build_block_map(config: dict[str, Any]) -> dict[int, int]:
-    block_map: dict[int, int] = {}
+def build_block_maps(
+    config: dict[str, Any],
+) -> tuple[dict[int, int], dict[int, int]]:
+    """
+    Build independent Holding Register and Input Register maps.
+
+    Registers without register_type default to Holding Registers to preserve
+    compatibility with existing device definitions.
+    """
+
+    hr_map: dict[int, int] = {}
+    ir_map: dict[int, int] = {}
 
     defaults = config.get("encoding", {})
     default_byteorder = defaults.get("byteorder", "big")
@@ -23,10 +33,24 @@ def build_block_map(config: dict[str, Any]) -> dict[int, int]:
             wordorder=reg.get("wordorder", default_wordorder),
         )
 
-        for offset, word in enumerate(values):
-            block_map[address + offset] = word
+        register_space = str(
+            reg.get("register_type", "holding")
+        ).lower()
 
-    return block_map
+        if register_space in {"input", "ir"}:
+            target_map = ir_map
+        elif register_space in {"holding", "hr"}:
+            target_map = hr_map
+        else:
+            raise ValueError(
+                f"Unsupported register_type '{register_space}' "
+                f"for register {reg.get('name', address)}"
+            )
+
+        for offset, word in enumerate(values):
+            target_map[address + offset] = word
+
+    return hr_map, ir_map
 
 
 def build_full_register_array(block_map: dict[int, int]) -> list[int]:
@@ -36,6 +60,9 @@ def build_full_register_array(block_map: dict[int, int]) -> list[int]:
         if 0 <= address < 65536:
             values[address] = value
         else:
-            logger.warning("Ignoring out-of-range register address: %s", address)
+            logger.warning(
+                "Ignoring out-of-range register address: %s",
+                address,
+            )
 
     return values

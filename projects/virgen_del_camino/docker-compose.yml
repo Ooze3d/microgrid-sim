@@ -19,3 +19,46 @@ services:
     network_mode: host
 
     restart: unless-stopped
+  
+  ev-1:
+    build:
+      context: ../..
+      dockerfile: Dockerfile
+
+    container_name: vdc-ev-1
+
+    command:
+      - python
+      - -m
+      - app.device_server
+      - --config
+      - /app/configs/ev_1.yaml
+
+    volumes:
+      - ./configs:/app/configs
+
+    network_mode: host
+
+    restart: unless-stopped
+
+
+  ev-2:
+    build:
+      context: ../..
+      dockerfile: Dockerfile
+
+    container_name: vdc-ev-2
+
+    command:
+      - python
+      - -m
+      - app.device_server
+      - --config
+      - /app/configs/ev_2.yaml
+
+    volumes:
+      - ./configs:/app/configs
+
+    network_mode: host
+
+    restart: unless-stopped

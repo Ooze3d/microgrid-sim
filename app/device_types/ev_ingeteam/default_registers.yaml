@@ -1,0 +1,113 @@
+registers:
+
+  # ---------------------------------------------------------
+  # INPUT REGISTERS - Outlet 1
+  # FC04
+  # ---------------------------------------------------------
+
+  - name: FSM_State_Outlet1
+    address: 1
+    register_type: input
+    type: uint16
+    value: 5
+
+  - name: Power_Outlet1
+    address: 2
+    register_type: input
+    type: uint32
+    word_order: little
+    value: 11000
+
+  - name: Energy_Outlet1
+    address: 4
+    register_type: input
+    type: uint32
+    word_order: little
+    value: 2500
+
+  - name: Accumulated_Cost_Outlet1
+    address: 6
+    register_type: input
+    type: float32
+    word_order: little
+    value: 0.75
+
+  - name: CRC_Outlet1
+    address: 8
+    register_type: input
+    type: uint32
+    word_order: little
+    value: 0
+
+
+  # ---------------------------------------------------------
+  # INPUT REGISTERS - Outlet 2
+  # ---------------------------------------------------------
+
+  - name: FSM_State_Outlet2
+    address: 101
+    register_type: input
+    type: uint16
+    value: 1
+
+  - name: Power_Outlet2
+    address: 102
+    register_type: input
+    type: uint32
+    word_order: little
+    value: 0
+
+  - name: Energy_Outlet2
+    address: 104
+    register_type: input
+    type: uint32
+    word_order: little
+    value: 0
+
+  - name: Accumulated_Cost_Outlet2
+    address: 106
+    register_type: input
+    type: float32
+    word_order: little
+    value: 0.0
+
+  - name: CRC_Outlet2
+    address: 108
+    register_type: input
+    type: uint32
+    word_order: little
+    value: 0
+
+
+  # ---------------------------------------------------------
+  # INPUT REGISTERS - Plant totals
+  # 32-bit BIG word order
+  # ---------------------------------------------------------
+
+  - name: Power_Phase1_Total
+    address: 9000
+    register_type: input
+    type: int32
+    word_order: big
+    value: 3667
+
+  - name: Power_Phase2_Total
+    address: 9002
+    register_type: input
+    type: int32
+    word_order: big
+    value: 3667
+
+  - name: Power_Phase3_Total
+    address: 9004
+    register_type: input
+    type: int32
+    word_order: big
+    value: 3666
+
+  - name: Number_Available_CPs
+    address: 9006
+    register_type: input
+    type: int32
+    word_order: big
+    value: 1

@@ -157,3 +157,8 @@ registers:
     address: 27769
     type: float32
     value: 78.0
+
+    #TODO PM5563:
+    #- power factor
+    #- 64-bit energy counters
+    #- legacy Energy_HI / Energy_LO fields

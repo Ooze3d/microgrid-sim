@@ -103,6 +103,37 @@ class PM5563Model(BaseDeviceModel):
         # Request 3
         self._set_float(datastore, 3109, f)
 
+        # Additional Request 1 measurements
+        current_unbalance = random.uniform(0.8, 2.5)
+
+        van = random.uniform(229.0, 233.0)
+        vbn = random.uniform(229.0, 233.0)
+        vcn = random.uniform(229.0, 233.0)
+
+        self._set_float(datastore, 3017, current_unbalance)
+
+        self._set_float(datastore, 3027, van)
+        self._set_float(datastore, 3029, vbn)
+        self._set_float(datastore, 3031, vcn)
+
+        # Request 6 - THD
+        self._set_float(datastore, 21299, random.uniform(1.5, 3.0))
+        self._set_float(datastore, 21301, random.uniform(1.5, 3.0))
+        self._set_float(datastore, 21303, random.uniform(1.5, 3.0))
+
+        self._set_float(datastore, 21321, random.uniform(0.8, 1.8))
+        self._set_float(datastore, 21323, random.uniform(0.8, 1.8))
+        self._set_float(datastore, 21325, random.uniform(0.8, 1.8))
+
+        # Request 8 - maxima
+        self._set_float(datastore, 27703, 60.0)
+        self._set_float(datastore, 27719, 410.0)
+
+        # Request 9 - maximum powers
+        self._set_float(datastore, 27753, 80.0)
+        self._set_float(datastore, 27761, 20.0)
+        self._set_float(datastore, 27769, 85.0)
+
     def _set_float(
         self,
         datastore,

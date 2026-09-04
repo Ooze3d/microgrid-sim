@@ -16,6 +16,12 @@ class BaseDeviceModel:
         self.config = config
         self.device = config.get("device", {})
         self.name = self.device.get("name", "virtual_device")
+        self.holding_datastore = None
+        self.input_datastore = None
+
+    def bind_datastores(self, holding_datastore, input_datastore) -> None:
+        self.holding_datastore = holding_datastore
+        self.input_datastore = input_datastore
 
     def on_write(self, datastore, address: int, values: list[int]) -> None:
         """
