@@ -1,0 +1,7 @@
+device:
+  name: ev_1
+  type: ev_ingeteam
+  bind_ip: "10.255.28.76"
+  port: 502
+  unit_id: 255
+  tick_interval: 0.2
