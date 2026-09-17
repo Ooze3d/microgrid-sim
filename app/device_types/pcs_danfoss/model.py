@@ -32,7 +32,7 @@ class PCSDanfossModel(BaseDeviceModel):
         )
 
         self.status_raw = int(
-            behaviour.get("status_raw", behaviour.get("status", 1))
+            behaviour.get("status_raw", behaviour.get("status", 2))
         )
 
         self.frequency_min = float(behaviour.get("frequency_min", 49.95))
