@@ -12,8 +12,28 @@ class PCSDanfossModel(BaseDeviceModel):
 
         self.dynamic = bool(behaviour.get("dynamic", True))
 
-        self.operation_mode = int(behaviour.get("operation_mode", 0))  # 0 grid-tied, 1 island
-        self.status = int(behaviour.get("status", 4))  # bit 2 = started, bit 3 = fault
+        #self.operation_mode = int(behaviour.get("operation_mode", 0))  # 0 grid-tied, 1 island
+        #self.status = int(behaviour.get("status", 4))  # bit 2 = started, bit 3 = fault
+
+        # Logical PCS state.
+        # For this first iteration, raw Modbus values are still preserved exactly
+        # so that introducing internal state does not change PLC behaviour.
+
+        self.mode = str(behaviour.get("mode", "csi")).lower()
+        self.running = bool(behaviour.get("running", True))
+        self.fault = bool(behaviour.get("fault", False))
+        self.ready = bool(behaviour.get("ready", True))
+
+        # Temporary raw compatibility values.
+        # These remain the source for registers 1615 and 43 until the exact
+        # Danfoss -> BESS_MB_reading bit mapping is verified.
+        self.operation_mode_raw = int(
+            behaviour.get("operation_mode_raw", behaviour.get("operation_mode", 0))
+        )
+
+        self.status_raw = int(
+            behaviour.get("status_raw", behaviour.get("status", 1))
+        )
 
         self.frequency_min = float(behaviour.get("frequency_min", 49.95))
         self.frequency_max = float(behaviour.get("frequency_max", 50.05))
@@ -77,11 +97,11 @@ class PCSDanfossModel(BaseDeviceModel):
         # Active_Power = -raw
         datastore.setValues(1508, [self._to_int16(int(active_power))])
 
-        datastore.setValues(1615, [self.operation_mode])
+        datastore.setValues(1615, [self.operation_mode_raw])
 
         # bit 2 = started, bit 3 = fault.
         # 4 means started + no fault.
-        datastore.setValues(43, [self.status])
+        datastore.setValues(43, [self.status_raw])
 
         # GVL_Custom.Output_AC = raw * 0.1
         # 4000 => 400.0 V
@@ -91,6 +111,7 @@ class PCSDanfossModel(BaseDeviceModel):
 
         datastore.setValues(1952, [self.input_power_limit])
         datastore.setValues(1953, [self.output_power_limit])
+        
 
     def _to_int16(self, value: int) -> int:
         if value < 0:
