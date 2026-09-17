@@ -1,0 +1,59 @@
+encoding:
+  byteorder: big
+  wordorder: big
+
+registers:
+  - name: Operation_State
+    address: 4103
+    type: uint16
+    value: 0
+
+  - name: Fault_State
+    address: 4105
+    type: uint16
+    value: 0
+
+  - name: Voltage_DC
+    address: 4109
+    type: uint16
+    value: 7800
+
+  - name: Current_DC
+    address: 4110
+    type: int16
+    value: 200
+
+  - name: SOC
+    address: 4111
+    type: uint16
+    value: 700
+
+  - name: SOH
+    address: 4112
+    type: uint16
+    value: 980
+
+  - name: BMS_Temp
+    address: 4137
+    type: int16
+    value: 250
+
+  - name: Energy_charged_HI
+    address: 4145
+    type: uint16
+    value: 0
+
+  - name: Energy_charged_LO
+    address: 4146
+    type: uint16
+    value: 1000
+
+  - name: Energy_discharged_HI
+    address: 4147
+    type: uint16
+    value: 0
+
+  - name: Energy_discharged_LO
+    address: 4148
+    type: uint16
+    value: 500

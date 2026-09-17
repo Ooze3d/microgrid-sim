@@ -1,0 +1,59 @@
+encoding:
+  byteorder: big
+  wordorder: big
+
+registers:
+  - name: Frequency
+    address: 1
+    type: uint16
+    value: 5000
+
+  - name: Inverter_Status
+    address: 43
+    type: uint16
+    value: 4
+
+  - name: Grid_Converter_Rated_Current
+    address: 113
+    type: uint16
+    value: 400
+
+  - name: Drive_Output_Voltage
+    address: 1107
+    type: uint16
+    value: 4000
+
+  - name: Active_Power
+    address: 1508
+    type: int16
+    value: 0
+
+  - name: Operation_Mode
+    address: 1615
+    type: uint16
+    value: 0
+
+  - name: Input_Power_Limit
+    address: 1952
+    type: uint16
+    value: 250
+
+  - name: Output_Power_Limit
+    address: 1953
+    type: uint16
+    value: 250
+
+  - name: Voltage_V12
+    address: 3203
+    type: uint16
+    value: 10000
+
+  - name: Voltage_V23
+    address: 3204
+    type: uint16
+    value: 10000
+
+  - name: Voltage_V31
+    address: 3205
+    type: uint16
+    value: 10000

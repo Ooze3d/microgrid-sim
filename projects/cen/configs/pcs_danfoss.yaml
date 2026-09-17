@@ -1,0 +1,30 @@
+device:
+  name: pcs_danfoss
+  type: pcs_danfoss
+  bind_ip: "192.168.52.70"
+  port: 502
+  unit_id: 1
+  tick_interval: 0.5
+
+behaviour:
+  dynamic: true
+
+  operation_mode: 0
+  status: 1
+
+  frequency_min: 49.95
+  frequency_max: 50.05
+
+  voltage_percent_min: 99.5
+  voltage_percent_max: 100.5
+
+  output_voltage_min: 398.0
+  output_voltage_max: 402.0
+
+  active_power_min: 0.0
+  active_power_max: 5.0
+
+  rated_current: 400
+
+  input_power_limit: 250
+  output_power_limit: 250

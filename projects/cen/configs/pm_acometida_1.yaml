@@ -1,0 +1,41 @@
+device:
+  name: pm_acometida_1
+  type: pm8000
+  bind_ip: "192.168.52.34"
+  port: 502
+  unit_id: 255
+  tick_interval: 0.2
+
+availability:
+  host: "192.168.52.32"
+  port: 502
+  unit_id: 255
+  timeout: 1.0
+  address: 12000
+  bit: 0
+  available_value: 1
+  initial_available: true
+
+behaviour:
+  dynamic: true
+
+  current_min: 258.0
+  current_max: 270.0
+
+  voltage_min: 408.0
+  voltage_max: 412.0
+
+  active_power_min: 175.0
+  active_power_max: 195.0
+
+  reactive_power_min: 180.0
+  reactive_power_max: 195.0
+
+  apparent_power_min: 250.0
+  apparent_power_max: 290.0
+
+  frequency_min: 49.92
+  frequency_max: 50.02
+
+  initial_energy_in: 123456.0
+  initial_energy_out: 0.0
