@@ -9,8 +9,15 @@ device:
 behaviour:
   dynamic: true
 
-  operation_mode: 0
-  status: 1
+  # Logical state - not yet mapped back to Modbus status words.
+  mode: csi
+  running: true
+  fault: false
+  ready: true
+
+  # Preserve current known-working raw behaviour.
+  operation_mode_raw: 0
+  status_raw: 1
 
   frequency_min: 49.95
   frequency_max: 50.05
