@@ -11,7 +11,7 @@ behaviour:
 
   # Logical state - not yet mapped back to Modbus status words.
   mode: csi
-  running: true
+  running: false
   fault: false
   ready: true
 

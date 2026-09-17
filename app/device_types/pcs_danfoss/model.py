@@ -20,7 +20,7 @@ class PCSDanfossModel(BaseDeviceModel):
         # so that introducing internal state does not change PLC behaviour.
 
         self.mode = str(behaviour.get("mode", "csi")).lower()
-        self.running = bool(behaviour.get("running", True))
+        self.running = bool(behaviour.get("running", False))
         self.fault = bool(behaviour.get("fault", False))
         self.ready = bool(behaviour.get("ready", True))
 
