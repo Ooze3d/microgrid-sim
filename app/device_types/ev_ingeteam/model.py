@@ -145,7 +145,7 @@ class EVIngeteamModel(BaseDeviceModel):
         # so an external request for register N returns the documented register N.
         internal_address = address + 1
 
-        datastore.set_internal_values(internal_address, words)
+        datastore.setValues(internal_address, words)
 
         # Temporary diagnostic mirror, if still enabled
         if self.config.get("diagnostics", {}).get(
