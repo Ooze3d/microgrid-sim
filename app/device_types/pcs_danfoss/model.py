@@ -13,8 +13,6 @@ class PCSDanfossModel(BaseDeviceModel):
         self.dynamic = bool(behaviour.get("dynamic", True))
 
         # Logical PCS state.
-        # For this first iteration, raw Modbus values are still preserved exactly
-        # so that introducing internal state does not change PLC behaviour.
 
         self.mode = str(behaviour.get("mode", "csi")).lower()
         self.running = bool(behaviour.get("running", False))
@@ -70,31 +68,31 @@ class PCSDanfossModel(BaseDeviceModel):
         # COM_BESS_READING:
         # Voltage_Vxx = raw * 420 * 0.0001
         # 10000 => 420 V
-        datastore.setValues(3203, [int(v12_percent * 100)])
-        datastore.setValues(3204, [int(v23_percent * 100)])
-        datastore.setValues(3205, [int(v31_percent * 100)])
+        datastore.set_internal_values(3203, [int(v12_percent * 100)])
+        datastore.set_internal_values(3204, [int(v23_percent * 100)])
+        datastore.set_internal_values(3205, [int(v31_percent * 100)])
 
         # COM_BESS_READING:
         # Frequency = raw * 0.01
         # 5000 => 50.00 Hz
-        datastore.setValues(1, [int(frequency * 100)])
+        datastore.set_internal_values(1, [int(frequency * 100)])
 
         # COM_BESS_READING:
         # Active_Power = -raw
-        datastore.setValues(1508, [self._to_int16(int(active_power))])
+        datastore.set_internal_values(1508, [self._to_int16(int(active_power))])
 
-        datastore.setValues(1615, [self._build_operation_mode_raw()])
+        datastore.set_internal_values(1615, [self._build_operation_mode_raw()])
 
-        datastore.setValues(43, [self._build_status_raw()])
+        datastore.set_internal_values(43, [self._build_status_raw()])
 
         # GVL_Custom.Output_AC = raw * 0.1
         # 4000 => 400.0 V
-        datastore.setValues(1107, [int(output_voltage * 10)])
+        datastore.set_internal_values(1107, [int(output_voltage * 10)])
 
-        datastore.setValues(113, [self.rated_current])
+        datastore.set_internal_values(113, [self.rated_current])
 
-        datastore.setValues(1952, [self.input_power_limit])
-        datastore.setValues(1953, [self.output_power_limit])
+        datastore.set_internal_values(1952, [self.input_power_limit])
+        datastore.set_internal_values(1953, [self.output_power_limit])
         
     def _build_status_raw(self) -> int:
         status = 0

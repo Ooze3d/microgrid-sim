@@ -31,3 +31,6 @@ class InteractiveDataBlock(ModbusSequentialDataBlock):
                 "Error while processing device interaction: %s",
                 exc,
             )
+
+    def set_internal_values(self, address, values):
+        super().setValues(address, values)

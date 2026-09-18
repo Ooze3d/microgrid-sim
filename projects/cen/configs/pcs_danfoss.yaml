@@ -11,9 +11,9 @@ behaviour:
 
   # Logical state
 
-  mode: csi
   running: false
   fault: false
+  mode: csi
 
   frequency_min: 49.95
   frequency_max: 50.05
