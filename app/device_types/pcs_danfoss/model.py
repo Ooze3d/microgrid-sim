@@ -97,11 +97,9 @@ class PCSDanfossModel(BaseDeviceModel):
         # Active_Power = -raw
         datastore.setValues(1508, [self._to_int16(int(active_power))])
 
-        datastore.setValues(1615, [self.operation_mode_raw])
+        datastore.setValues(1615, [self._build_operation_mode_raw()])
 
-        # bit 2 = started, bit 3 = fault.
-        # 4 means started + no fault.
-        datastore.setValues(43, [self.status_raw])
+        datastore.setValues(43, [self._build_status_raw()])
 
         # GVL_Custom.Output_AC = raw * 0.1
         # 4000 => 400.0 V
@@ -112,6 +110,23 @@ class PCSDanfossModel(BaseDeviceModel):
         datastore.setValues(1952, [self.input_power_limit])
         datastore.setValues(1953, [self.output_power_limit])
         
+    def _build_status_raw(self) -> int:
+    status = 0
+
+    if self.running:
+        status |= 0x0004
+
+    if self.fault:
+        status |= 0x0008
+
+    return status
+
+
+    def _build_operation_mode_raw(self) -> int:
+        if self.mode == "vsi":
+            return 1
+
+        return 0
 
     def _to_int16(self, value: int) -> int:
         if value < 0:
