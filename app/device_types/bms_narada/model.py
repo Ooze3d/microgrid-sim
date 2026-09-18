@@ -35,21 +35,21 @@ class BMSNaradaModel(BaseDeviceModel):
         current = random.uniform(self.current_min, self.current_max)
         temp = random.uniform(self.temp_min, self.temp_max)
 
-        datastore.setValues(4103, [0])  # Operation state: normal
-        datastore.setValues(4105, [0])  # Fault/alarm state: no alarms
+        datastore.set_internal_values(4103, [0])  # Operation state: normal
+        datastore.set_internal_values(4105, [0])  # Fault/alarm state: no alarms
 
-        datastore.setValues(4109, [int(voltage * 10)])
-        datastore.setValues(4110, [int(current * 10)])
+        datastore.set_internal_values(4109, [int(voltage * 10)])
+        datastore.set_internal_values(4110, [int(current * 10)])
 
-        datastore.setValues(4111, [int(self.soc * 10)])
-        datastore.setValues(4112, [int(self.soh * 10)])
+        datastore.set_internal_values(4111, [int(self.soc * 10)])
+        datastore.set_internal_values(4112, [int(self.soh * 10)])
 
-        datastore.setValues(4137, [int(temp * 10)])
+        datastore.set_internal_values(4137, [int(temp * 10)])
 
         self.energy_discharged += 1
 
-        datastore.setValues(4145, [(self.energy_charged >> 16) & 0xFFFF])
-        datastore.setValues(4146, [self.energy_charged & 0xFFFF])
+        datastore.set_internal_values(4145, [(self.energy_charged >> 16) & 0xFFFF])
+        datastore.set_internal_values(4146, [self.energy_charged & 0xFFFF])
 
-        datastore.setValues(4147, [(self.energy_discharged >> 16) & 0xFFFF])
-        datastore.setValues(4148, [self.energy_discharged & 0xFFFF])
+        datastore.set_internal_values(4147, [(self.energy_discharged >> 16) & 0xFFFF])
+        datastore.set_internal_values(4148, [self.energy_discharged & 0xFFFF])

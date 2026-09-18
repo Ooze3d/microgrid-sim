@@ -183,7 +183,7 @@ class PM8000Model(BaseDeviceModel):
             byteorder=self.byteorder,
             wordorder=self.wordorder,
         )
-        datastore.setValues(address, words)
+        datastore.set_internal_values(address, words)
 
     def _set_energy_block(self, datastore, start_address: int, value: int) -> None:
         value = max(0, int(value))
@@ -199,4 +199,4 @@ class PM8000Model(BaseDeviceModel):
             0,
         ]
 
-        datastore.setValues(start_address, words)
+        datastore.set_internal_values(start_address, words)

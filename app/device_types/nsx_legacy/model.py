@@ -81,10 +81,10 @@ class NSXLegacyModel(BaseDeviceModel):
     def reset(self, datastore, source: str = "unknown") -> None:
         self.log("RESET breaker triggered by %s", source)
 
-        datastore.setValues(12004, [0])
-        datastore.setValues(12005, [0])
-        datastore.setValues(12011, [0])
-        datastore.setValues(12012, [0])
+        datastore.set_internal_values(12004, [0])
+        datastore.set_internal_values(12005, [0])
+        datastore.set_internal_values(12011, [0])
+        datastore.set_internal_values(12012, [0])
 
     def _check_plc_command_triggers(self, datastore) -> None:
         triggers = self.command.get("plc_triggers", {})
@@ -133,20 +133,20 @@ class NSXLegacyModel(BaseDeviceModel):
         return int(raw_value)
 
     def _apply_open_values(self, datastore) -> None:
-        datastore.setValues(12001, [0])          # status open
-        datastore.setValues(12016, [0, 0, 0])    # currents
-        datastore.setValues(12038, [0, 0, 0, 0]) # P1/P2/P3/Ptot
-        datastore.setValues(12042, [0, 0, 0, 0]) # Q1/Q2/Q3/Qtot
-        datastore.setValues(12046, [0, 0, 0, 0]) # S1/S2/S3/Stot
+        datastore.set_internal_values(12001, [0])          # status open
+        datastore.set_internal_values(12016, [0, 0, 0])    # currents
+        datastore.set_internal_values(12038, [0, 0, 0, 0]) # P1/P2/P3/Ptot
+        datastore.set_internal_values(12042, [0, 0, 0, 0]) # Q1/Q2/Q3/Qtot
+        datastore.set_internal_values(12046, [0, 0, 0, 0]) # S1/S2/S3/Stot
 
     def _apply_closed_dynamic_values(self, datastore) -> None:
         i1 = random.randint(self.current_min, self.current_max)
         i2 = random.randint(self.current_min, self.current_max)
         i3 = random.randint(self.current_min, self.current_max)
 
-        datastore.setValues(12001, [1])
-        datastore.setValues(12016, [i1, i2, i3])
+        datastore.set_internal_values(12001, [1])
+        datastore.set_internal_values(12016, [i1, i2, i3])
 
-        datastore.setValues(12041, [self.closed_active_power])
-        datastore.setValues(12045, [self.closed_reactive_power])
-        datastore.setValues(12049, [self.closed_apparent_power])
+        datastore.set_internal_values(12041, [self.closed_active_power])
+        datastore.set_internal_values(12045, [self.closed_reactive_power])
+        datastore.set_internal_values(12049, [self.closed_apparent_power])

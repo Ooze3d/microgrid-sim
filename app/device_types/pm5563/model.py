@@ -147,4 +147,4 @@ class PM5563Model(BaseDeviceModel):
             wordorder=self.wordorder,
         )
 
-        datastore.setValues(address, words)
+        datastore.set_internal_values(address, words)
